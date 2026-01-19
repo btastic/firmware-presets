@@ -1,0 +1,125 @@
+#$ TITLE: itsFPV ERA 5" 2025.12
+#$ FIRMWARE_VERSION: 2025.12
+#$ CATEGORY: TUNE
+#$ STATUS: OFFICIAL
+#$ KEYWORDS: itsfpv, ERA, 6S, freestyle, 5 inch, 5", 2025.12
+#$ AUTHOR: btastic_fpv
+
+#$ PARSER: MARKED
+
+#$ DESCRIPTION:
+
+#$ DISCUSSION: https://github.com/betaflight/firmware-presets/pull/xxx
+
+#$ INCLUDE_WARNING: misc/warnings/en/rpm_filters.txt
+#$ INCLUDE: presets/2025.12/tune/defaults.txt
+#$ INCLUDE: presets/2025.12/rc_link/defaults.txt
+#$ INCLUDE: presets/4.5/filters/defaults.txt
+
+# ---- Motors ----
+#$ OPTION_GROUP BEGIN (EXCLUSIVE): Dshot settings
+    #$ OPTION BEGIN (CHECKED): Dshot600
+        set dshot_bidir = ON
+        set motor_pwm_protocol = DSHOT600
+    #$ OPTION END
+
+    #$ OPTION BEGIN (UNCHECKED): Dshot300
+        set dshot_bidir = ON
+        set motor_pwm_protocol = Dshot300
+    #$ OPTION END    
+#$ OPTION_GROUP END
+
+# ---- Beacon ----
+beacon RX_LOST
+beacon RX_SET
+
+# --- Misc
+set small_angle = 180
+set pid_process_denom = 2
+
+# ---- Filters ----
+set gyro_lpf1_static_hz = 0
+set gyro_lpf2_static_hz = 750
+set dyn_notch_count = 1
+set dyn_notch_q = 500
+set gyro_lpf1_dyn_min_hz = 0
+set gyro_lpf1_dyn_max_hz = 750
+set simplified_gyro_filter_multiplier = 150
+
+
+# ---- PIDs ----
+profile 0
+set dterm_lpf1_dyn_min_hz = 90
+set dterm_lpf1_dyn_max_hz = 180
+set dterm_lpf1_static_hz = 90
+set dterm_lpf2_static_hz = 180
+set vbat_sag_compensation = 100
+set p_pitch = 70
+set i_pitch = 62
+set d_pitch = 45
+set f_pitch = 130
+set p_roll = 58
+set i_roll = 52
+set d_roll = 35
+set f_roll = 109
+set p_yaw = 58
+set i_yaw = 52
+set f_yaw = 109
+set d_max_roll = 35
+set d_max_pitch = 45
+set dyn_idle_min_rpm = 18
+set simplified_master_multiplier = 130
+set simplified_i_gain = 50
+set simplified_d_gain = 90
+set simplified_d_max_gain = 0
+set simplified_feedforward_gain = 70
+set simplified_pitch_d_gain = 115
+set simplified_pitch_pi_gain = 115
+set simplified_dterm_filter_multiplier = 120
+
+# ---- Radio links ----
+#$ OPTION_GROUP BEGIN (EXCLUSIVE): Radio links
+    #Note you have to build the firmware with Ghost or SBUS to use them
+    #$ OPTION BEGIN (CHECKED): CRSF/ELRS
+        feature RX_SERIAL
+        set serialrx_provider = CRSF
+    #$ OPTION END
+
+    #$ OPTION BEGIN (UNCHECKED): Ghost 
+        feature RX_SERIAL
+        set serialrx_provider = GHST
+    #$ OPTION END
+
+    #$ OPTION BEGIN (UNCHECKED): SBUS
+        feature RX_SERIAL
+        set serialrx_provider = SBUS
+    #$ OPTION END
+#$ OPTION_GROUP END
+
+# ---- Optional rates ----
+#$ OPTION_GROUP BEGIN: (EXCLUSIVE) Optional Rates
+    #$ OPTION BEGIN (UNCHECKED): itskenfpv Rates
+    #$ INCLUDE: presets/2025.12/rates/defaults.txt
+        set roll_rc_rate = 1
+        set pitch_rc_rate = 1
+        set yaw_rc_rate = 1
+        set roll_expo = 1
+        set pitch_expo = 1
+        set yaw_expo = 1
+    #$ OPTION END
+#$ OPTION_GROUP END
+
+# ---- Optional OSD ----
+#$ OPTION_GROUP BEGIN: (EXCLUSIVE) Optional OSD
+    #$ OPTION BEGIN (UNCHECKED): itskenfpv OSD (HD only)
+    #$ INCLUDE: presets/2025.12/osd/defaults.txt
+        set osd_link_quality_pos = 3471
+        set osd_rssi_dbm_pos = 3439
+        set osd_rsnr_pos = 3407
+        set osd_current_pos = 2642
+        set osd_mah_drawn_pos = 2650
+        set osd_warnings_pos = 14900
+    #$ OPTION END
+#$ OPTION_GROUP END
+
+
